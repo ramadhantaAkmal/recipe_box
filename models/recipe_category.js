@@ -11,14 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      recipe_category.hasMany(models.category)
-      recipe_category.hasMany(models.recipe)
     }
   }
   recipe_category.init({
     ingredient_quentity: DataTypes.INTEGER,
-    recipe_id: DataTypes.INTEGER,
-    category_id: DataTypes.INTEGER
+    recipeId: DataTypes.INTEGER,
+    categoryId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'recipe_category',
