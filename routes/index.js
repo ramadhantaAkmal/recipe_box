@@ -8,7 +8,7 @@ const authRoutes = require("./authRoute");
 const userRoutes = require("./userRoute");
 const recipeRoutes = require("./recipeRoute");
 
-route.use("/", authRoutes);
+route.use("/auth", authRoutes);
 route.use("/users", userRoutes);
 route.use("/recipes", recipeRoutes);
 

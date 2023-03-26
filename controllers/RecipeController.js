@@ -45,6 +45,17 @@ class RecipeController {
     } catch (error) {}
   }
 
+  static async getRecipeByID(req, res) {
+    try {
+      const id = +req.params.id;
+
+      let recipes = recipe.findByPk(id);
+      res.json(recipes);
+    } catch (error) {
+      res.json(error);
+    }
+  }
+
   static async updateRecipe(req, res) {
     try {
       const id = +req.params.id;
@@ -73,4 +84,4 @@ class RecipeController {
   }
 }
 
-module.exports = RecipeController
+module.exports = RecipeController;
