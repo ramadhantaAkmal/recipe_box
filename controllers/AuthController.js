@@ -65,12 +65,13 @@ class AuthController {
           }
         );
 
-        users.refresh_token = token;
-
-        res.status(200).json(users);
+        res.status(200).json({
+          message: "Success login",
+          token: token,
+        });
         return;
       }
-      res.status(400).send("Invalid Credentials");
+      res.status(400).json({ message: "Invalid Credentials" });
     } catch (error) {
       res.json(error);
     }

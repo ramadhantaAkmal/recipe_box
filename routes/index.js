@@ -21,5 +21,6 @@ route.use("/recipes", recipeRoutes);
 route.use("/categories", categoryRoutes);
 route.use("/ingredients", ingredientRoutes);
 route.use("/rc", recipeCategoryRoutes);
+route.use("/recipes", Authorization.verifyToken, recipeRoutes);
 
 module.exports = route;
