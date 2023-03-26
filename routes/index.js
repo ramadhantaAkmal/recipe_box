@@ -11,6 +11,6 @@ const recipeRoutes = require("./recipeRoute");
 
 route.use("/auth", authRoutes);
 route.use("/users", Authorization.verifyToken, userRoutes);
-route.use("/recipes", recipeRoutes);
+route.use("/recipes", Authorization.verifyToken, recipeRoutes);
 
 module.exports = route;
