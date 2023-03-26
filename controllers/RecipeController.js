@@ -48,8 +48,10 @@ class RecipeController {
   static async getRecipeByID(req, res) {
     try {
       const id = +req.params.id;
+      console.log(id);
 
-      let recipes = recipe.findByPk(id);
+      const recipes = await recipe.findByPk(id);
+      // console.log(recipes);
       res.json(recipes);
     } catch (error) {
       res.json(error);
@@ -62,7 +64,7 @@ class RecipeController {
       const { name, description, preparation_time, cooking_time, userId } =
         req.body;
 
-      let result = recipe.update(
+      let result = await recipe.update(
         {
           name,
           description,

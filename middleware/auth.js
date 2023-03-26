@@ -4,36 +4,32 @@ const config = process.env;
 
 class Authorization {
   static verifyToken(req, res, next) {
-    const token =
-      req.body.token || req.query.token || req.headers["x-access-token"];
-
-    if (!token) {
-      return res.status(403).send("A token is required for authentication");
-    }
     try {
-      const decoded = jwt.verify(token, config.TOKEN_KEY);
-      req.user = decoded;
+      const bearerHeader = req.headers["authorization"];
+
+      if (typeof bearerHeader !== "undefined") {
+        const bearer = bearerHeader.split(" ");
+        const bearerToken = bearer[1];
+        const decoded = jwt.verify(bearerToken, config.TOKEN_KEY);
+        req.user = decoded;
+      } else {
+        return res.status(401).json({ message: "Token cannot be null" });
+      }
     } catch (err) {
-      return res.status(401).send("Invalid Token");
+      return res.status(401).json({ message: "Invalid Token" });
     }
     return next();
   }
+
+  static userAuthorization(req, res, next) {
+    try {
+    } catch (error) {}
+  }
+
+  static recipeAuthorization(req, res, next) {
+    try {
+    } catch (error) {}
+  }
 }
-
-// const verifyToken = (req, res, next) => {
-//   const token =
-//     req.body.token || req.query.token || req.headers["x-access-token"];
-
-//   if (!token) {
-//     return res.status(403).send("A token is required for authentication");
-//   }
-//   try {
-//     const decoded = jwt.verify(token, config.TOKEN_KEY);
-//     req.user = decoded;
-//   } catch (err) {
-//     return res.status(401).send("Invalid Token");
-//   }
-//   return next();
-// };
 
 module.exports = Authorization;

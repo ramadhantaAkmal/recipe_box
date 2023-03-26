@@ -1,4 +1,5 @@
 const route = require("express").Router();
+const Authorization = require("../middleware/auth");
 
 route.get("/", (req, res) => {
   res.send("Test homepage");
@@ -9,7 +10,7 @@ const userRoutes = require("./userRoute");
 const recipeRoutes = require("./recipeRoute");
 
 route.use("/auth", authRoutes);
-route.use("/users", userRoutes);
+route.use("/users", Authorization.verifyToken, userRoutes);
 route.use("/recipes", recipeRoutes);
 
 module.exports = route;
