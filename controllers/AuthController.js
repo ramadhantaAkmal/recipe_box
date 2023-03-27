@@ -4,6 +4,14 @@ const jwt = require("jsonwebtoken");
 const Op = require("Sequelize").Op;
 
 class AuthController {
+  static showLoginPage(req, res) {
+    res.render("auth/login/index.ejs");
+  }
+
+  static showRegisterPage(req, res) {
+    res.render("auth/register/index.ejs");
+  }
+
   static async register(req, res) {
     try {
       const { username, email } = req.body;
@@ -65,16 +73,25 @@ class AuthController {
           }
         );
 
-        res.status(200).json({
-          message: "Success login",
-          token: token,
-        });
+        res.cookie("authorization", `Bearer ${token}`);
+        res.redirect("/");
+
+        // res.status(200).json({
+        //   message: "Success login",
+        //   token: token,
+        // });
         return;
       }
       res.status(400).json({ message: "Invalid Credentials" });
     } catch (error) {
       res.json(error);
     }
+  }
+
+  static logout(req, res) {
+    res.clearCookie("authorization");
+    // redirect to login
+    return res.redirect("/login");
   }
 }
 

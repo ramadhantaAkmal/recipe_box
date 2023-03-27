@@ -1,0 +1,17 @@
+<%- include('../../layouts/header.ejs'); -%>
+
+<h3>Login Page</h3>
+<form id="basic-form" action="/login" method="post">
+    <div class="mb-3">
+        <label for="">Email</label> 
+        <input type="text" class="form-control" name="email" placeholder="Submit email...">
+    </div>
+    <div class="mb-3">
+        <label for="">Password</label>
+        <input type="text" class="form-control" name="password" placeholder="Submit password...">
+    </div>
+    <div class="mb-3">
+        <input class="btn btn-primary w-100"  type="submit" value="Login">
+    </div>
+</form>
+<%- include('../../layouts/footer.ejs'); -%>
