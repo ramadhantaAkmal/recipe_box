@@ -6,8 +6,9 @@ class RecipeCategoryController{
                 include: [recipe, category]
             })
 
-            res.json(PIs)
+            res.json(RCs)
         } catch (err) {
+            console.log(err);
             res.json(err)
         }
     }
