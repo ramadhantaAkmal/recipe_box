@@ -9,12 +9,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      category.belongsTo(models.recipe_category);
+      category.belongsToMany(models.recipe, { through: models.recipe_category })
     }
   }
   category.init(
     {
-      name: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            message: "Name can`t be null."
+          }
+        }
+      },
     },
     {
       sequelize,

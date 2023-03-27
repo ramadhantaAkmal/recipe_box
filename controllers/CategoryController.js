@@ -3,9 +3,7 @@ const { category } = require("../models");
 class CategoryController {
   static async getCategories(req, res) {
     try {
-      let categories = await category.findAll({
-        include: [ship],
-      });
+      let categories = await category.findAll();
       res.json(categories);
       //res.render("pirates/index.ejs", { pirates });
     } catch (err) {

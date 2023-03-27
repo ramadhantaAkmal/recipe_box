@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      recipe_category.belongsTo(models.category);
+      recipe_category.belongsTo(models.recipe);
     }
   }
   recipe_category.init({
