@@ -1,9 +1,11 @@
-const { recipe } = require("../models");
+const { recipe, ingredient, recipe_category, user, category } = require("../models");
 
 class RecipeController {
   static async listRecipe(req, res) {
     try {
-      let recipes = await recipe.findAll();
+      let recipes = await recipe.findAll({
+        include: [user,ingredient]
+      });
       res.json(recipes);
     } catch (error) {
       res.json(error);
@@ -84,6 +86,46 @@ class RecipeController {
       res.json(error);
     }
   }
+  
+
+  // get recipe data in details
+  static async getRecipeDetails(req, res) {
+    try {
+        const id = +req.params.id
+
+        let result = await recipe_category.findAll({
+            where: {
+                recipeId: id
+            },
+            include: [recipe, category]
+        })
+
+        let resultRC = {}
+        let categories = []
+
+        if (result.length === 0) {
+            result = await recipe.findByPk(id)
+            resultRC = {
+                ...result.dataValues,
+                categories
+            }
+        } else {
+            categories = result.map(el => {
+                return el.category.dataValues
+            })
+            resultRC = {
+                ...result[0].recipe.dataValues,
+                categories
+            }
+        }
+
+        console.log(resultRC)
+        res.json(resultRC)
+        // res.render('recipe/detailRecipe.ejs', { RC: resultRC });
+    } catch (err) {
+        res.json(err)
+    }
+}
 }
 
 module.exports = RecipeController;
