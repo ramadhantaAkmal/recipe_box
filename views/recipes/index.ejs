@@ -1,0 +1,39 @@
+<%- include('../layouts/header.ejs'); -%>
+
+<h5 class="">List recipes</h5>
+
+<!-- <div class="row">
+  <% recipes.forEach(recipe => { %>
+
+  <div class="box"><%= recipe.name %></div>
+
+  <% }) %>
+</div> -->
+
+<div class="">
+  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
+    <% recipes.forEach(recipe => { %>
+    <div class="col">
+      <a href="/recipes/<%= recipe.id %>">
+        <div class="border rounded grid-hover">
+          <img class="img-fluid rounded" src="/img/food-head.jpg" alt="" />
+          <div class="p-2">
+            <div class="fs-5"><%= recipe.name %></div>
+            <!-- <div class="text-description-grid"><%= recipe.description %></div> -->
+            <hr class="divider" />
+            <div class="text-description-time">
+              Prep time : <%= recipe.preparation_time %> hours
+            </div>
+            <div class="text-description-time">
+              Cook time : <%= recipe.cooking_time %> hours
+            </div>
+            <div class="text-description-grid text-end">Author : <%= recipe.user.username %></div>
+          </div>
+        </div>
+      </a>
+    </div>
+    <% }) %>
+  </div>
+</div>
+
+<%- include('../layouts/footer.ejs'); -%>
