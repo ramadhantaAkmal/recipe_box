@@ -28,7 +28,7 @@ class RecipeController {
         order: [["id", "ASC"]],
       });
       // res.json(recipes);
-      console.log(recipes);
+      console.log(user_id);
       res.render("recipes/index.ejs", { recipes });
     } catch (error) {
       res.json(error);
