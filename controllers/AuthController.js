@@ -74,7 +74,7 @@ class AuthController {
         );
 
         res.cookie("authorization", `Bearer ${token}`);
-        res.redirect("/");
+        res.redirect("/home");
 
         // res.status(200).json({
         //   message: "Success login",
@@ -91,7 +91,7 @@ class AuthController {
   static logout(req, res) {
     res.clearCookie("authorization");
     // redirect to login
-    return res.redirect("/login");
+    return res.redirect("/");
   }
 }
 

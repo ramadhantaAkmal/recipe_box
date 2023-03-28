@@ -1,5 +1,21 @@
 <%- include('../layouts/header.ejs'); -%>
 
-<h5 class="">List recipes</h5>
+<h3><%= recipes.name %></h3>
+
+<div class="row gx-5">
+  <div class="col">
+    <img class="rounded img-fluid" src="/img/food-head.jpg" alt="" />
+  </div>
+  <div class="col">
+    <div class="border p-2">
+      <div class="fw-bolder">Description :</div>
+      <p class="text-description"><%= recipes.description %></p>
+    </div>
+  </div>
+</div>
+
+<div><strong>Category</strong> : xxxx</div>
+
+<div><strong>Ingredients :</strong></div>
 
 <%- include('../layouts/footer.ejs'); -%>

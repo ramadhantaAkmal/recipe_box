@@ -93,6 +93,10 @@ button:hover {
     text-align: justify;
 }
 
+.text-description {
+    text-align: justify;
+}
+
 .text-description-time {
     font-size: 10px;
 }
