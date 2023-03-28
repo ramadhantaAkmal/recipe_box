@@ -4,9 +4,32 @@ class RecipeController {
   static async listRecipe(req, res) {
     try {
       let recipes = await recipe.findAll({
-        include: [user,ingredient]
+        include: [user],
+        order: [["id", "ASC"]],
       });
-      res.json(recipes);
+      if (req.user_id) {
+        res.render("dashboard.ejs", { recipes });
+      } else {
+        res.render("landingPage.ejs", { recipes });
+      }
+    } catch (error) {
+      res.json(error);
+    }
+  }
+
+  static async listMyRecipe(req, res) {
+    const user_id = req.user_id;
+    try {
+      let recipes = await recipe.findAll({
+        include: [user],
+        where: {
+          userId: user_id,
+        },
+        order: [["id", "ASC"]],
+      });
+      // res.json(recipes);
+      console.log(user_id);
+      res.render("recipes/index.ejs", { recipes });
     } catch (error) {
       res.json(error);
     }
@@ -54,7 +77,8 @@ class RecipeController {
 
       const recipes = await recipe.findByPk(id);
       // console.log(recipes);
-      res.json(recipes);
+      res.render("recipes/detailPage.ejs", { recipes });
+      // res.json(recipes);
     } catch (error) {
       res.json(error);
     }

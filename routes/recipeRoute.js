@@ -1,7 +1,7 @@
 const recipeRoute = require("express").Router();
 const { RecipeController } = require("../controllers");
 
-recipeRoute.get("/", RecipeController.listRecipe);
+recipeRoute.get("/", RecipeController.listMyRecipe);
 recipeRoute.post("/", RecipeController.addRecipes);
 recipeRoute.get("/:id", RecipeController.getRecipeByID);
 recipeRoute.get("/delete/:id", RecipeController.deleteRecipe);
