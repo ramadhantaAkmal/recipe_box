@@ -7,8 +7,12 @@ class RecipeController {
         include: [user],
         order: [["id", "ASC"]],
       });
-      if (req.user_id) {
-        res.render("dashboard.ejs", { recipes });
+      const data = {
+        id: req.user_id,
+        username: req.username,
+      };
+      if (req.username) {
+        res.render("dashboard.ejs", { recipes, data });
       } else {
         res.render("landingPage.ejs", { recipes });
       }
@@ -19,6 +23,10 @@ class RecipeController {
 
   static async listMyRecipe(req, res) {
     const user_id = req.user_id;
+    const data = {
+      id: req.user_id,
+      username: req.username,
+    };
     try {
       let recipes = await recipe.findAll({
         include: [user],
@@ -29,7 +37,7 @@ class RecipeController {
       });
       // res.json(recipes);
       console.log(recipes);
-      res.render("recipes/index.ejs", { recipes });
+      res.render("recipes/index.ejs", { recipes, data });
     } catch (error) {
       res.json(error);
     }
@@ -37,8 +45,9 @@ class RecipeController {
 
   static async addRecipes(req, res) {
     try {
-      const { name, description, preparation_time, cooking_time, userId } =
+      const { name, description, preparation_time, cooking_time} =
         req.body;
+      const userId = req.user_id
       const result = await recipe.create({
         name,
         description,
@@ -73,12 +82,12 @@ class RecipeController {
   static async getRecipeByID(req, res) {
     try {
       const id = +req.params.id;
-      console.log(id);
-
+      const data = {
+        id: req.user_id,
+        username: req.username,
+      };
       const recipes = await recipe.findByPk(id);
-      // console.log(recipes);
-      res.render("recipes/detailPage.ejs", { recipes });
-      // res.json(recipes);
+      res.render("recipes/detailPage.ejs", { recipes, data });
     } catch (error) {
       res.json(error);
     }

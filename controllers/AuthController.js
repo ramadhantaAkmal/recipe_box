@@ -66,7 +66,7 @@ class AuthController {
       if (users && (await bcrypt.compare(password, users.password))) {
         // console.log("password sama");
         const token = jwt.sign(
-          { user_id: users.id, email },
+          { user_id: users.id, username: users.username },
           process.env.TOKEN_KEY,
           {
             expiresIn: "2h",

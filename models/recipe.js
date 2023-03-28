@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class recipe extends Model {
     /**
@@ -11,18 +9,27 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      recipe.belongsTo(models.user)
+      recipe.belongsTo(models.user);
     }
   }
-  recipe.init({
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    preparation_time: DataTypes.INTEGER,
-    cooking_time: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'recipe',
+  recipe.init(
+    {
+      name: DataTypes.STRING,
+      description: DataTypes.STRING,
+      preparation_time: DataTypes.INTEGER,
+      cooking_time: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "recipe",
+    }
+  );
+  recipe.addHook("beforeValidate", (recipe, options) => {
+    recipe.name = (recipe.name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1)))
+      .join(" ");
   });
   return recipe;
 };
