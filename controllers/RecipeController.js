@@ -1,10 +1,17 @@
-const { recipe } = require("../models");
+const { recipe, user } = require("../models");
 
 class RecipeController {
   static async listRecipe(req, res) {
     try {
-      let recipes = await recipe.findAll();
-      res.json(recipes);
+      let recipes = await recipe.findAll({
+        include: [user],
+        order: [
+          ["id", "ASC"],
+        ],
+      });
+      // res.json(recipes);
+      console.log(recipes);
+      res.render("recipes/index.ejs", { recipes });
     } catch (error) {
       res.json(error);
     }

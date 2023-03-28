@@ -16,10 +16,12 @@ class Authorization {
         req.user_id = decoded.user_id;
         return next();
       } else {
-        return res.status(401).json({ message: "Token cannot be null" });
+        return res.redirect("/login")
+        // return res.status(401).json({ message: "Token cannot be null" });
       }
     } catch (err) {
-      return res.status(401).json({ message: "Invalid Token" });
+      return res.redirect("/login")
+      // return res.status(401).json({ message: "Invalid Token" });
     }
   }
 
