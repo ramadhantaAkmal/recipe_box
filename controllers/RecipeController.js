@@ -27,13 +27,13 @@ class RecipeController {
     const user_id = req.user_id;
     try {
       let recipes = await recipe.findAll({
-        include: [user],
+        include: [user,ingredient],
         where: {
           userId: user_id,
         },
         order: [["id", "ASC"]],
       });
-      // res.json(recipes);
+     
       console.log(user_id);
       res.render("recipes/index.ejs", { recipes });
     } catch (error) {
@@ -45,15 +45,23 @@ class RecipeController {
     try {
       const { name, description, preparation_time, cooking_time, userId } =
         req.body;
-      const result = await recipe.create({
+      
+      const recipeNew = await recipe.create({
         name,
         description,
         preparation_time,
         cooking_time,
         userId,
       });
-      res.json(result);
+
+      const rcNew = await recipe_category.create({
+        recipeId: recipeNew.id,
+        categoryId: 11,
+      });
+
+      res.json(rcNew);
     } catch (error) {
+      console.log(error);
       res.json(error);
     }
   }
@@ -93,16 +101,14 @@ class RecipeController {
   static async updateRecipe(req, res) {
     try {
       const id = +req.params.id;
-      const { name, description, preparation_time, cooking_time, userId } =
+      const { name, description, preparation_time, cooking_time, categoryId } =
         req.body;
-
       let result = await recipe.update(
         {
           name,
           description,
           preparation_time,
           cooking_time,
-          userId,
         },
         {
           where: {
@@ -111,9 +117,65 @@ class RecipeController {
         }
       );
 
-      res.json(result);
+      let rc = await recipe_category.update(
+        {
+          categoryId,
+        },
+        {
+          where: {
+            recipeId: id,
+          },
+        }
+      );
+
+      res.redirect("/recipes");
     } catch (error) {
       res.json(error);
+    }
+  }
+
+  static async updateRecipePage(req, res) {
+    try {
+      const id = +req.params.id;
+
+      let result = await recipe_category.findAll({
+        where: {
+          recipeId: id,
+        },
+        include: [recipe, category],
+      });
+
+      let ingredients = await ingredient.findAll({
+        where: {
+          recipeId: id,
+        },
+      });
+
+      let categoryList = await category.findAll();
+
+      let resultRC = {};
+      let categories = [];
+
+      if (result.length === 0) {
+        result = await recipe.findByPk(id);
+        resultRC = {
+          ...result.dataValues,
+          categories,
+        };
+      } else {
+        categories = result.map((el) => {
+          return el.category.dataValues;
+        });
+        resultRC = {
+          ...result[0].recipe.dataValues,
+          categories,
+          ingredients,
+        };
+      }
+
+      res.render("editRecipe/index.ejs", { resultRC, categoryList });
+    } catch (err) {
+      res.json(err);
     }
   }
 
@@ -127,6 +189,12 @@ class RecipeController {
           recipeId: id,
         },
         include: [recipe, category],
+      });
+
+      let ingredients = await ingredient.findAll({
+        where: {
+          recipeId: id,
+        },
       });
 
       let resultRC = {};
@@ -145,13 +213,13 @@ class RecipeController {
         resultRC = {
           ...result[0].recipe.dataValues,
           categories,
+          ingredients,
         };
       }
-
       console.log(resultRC);
-      res.json(resultRC);
-      // res.render('recipe/detailRecipe.ejs', { RC: resultRC });
+      res.render("recipes/detailPage.ejs", { resultRC });
     } catch (err) {
+      console.log(err);
       res.json(err);
     }
   }

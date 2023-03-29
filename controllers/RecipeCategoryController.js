@@ -1,4 +1,4 @@
-const { recipe_category, recipe, category } = require('../models')
+const { recipe_category, recipe, category, ingredient } = require('../models')
 class RecipeCategoryController{
     static async getRC(req, res) {
         try {
@@ -15,15 +15,43 @@ class RecipeCategoryController{
 
     static async create(req, res) {
         try {
-            const { recipeId, categoryId, ingredient_quentity } = req.body;
+            const { recipeId, categoryId } = req.body;
+
+            let quantity = await ingredient.count({
+                where: { recipeId: recipeId },
+              });
 
             let result = await recipe_category.create({
                 recipeId: +recipeId,
                 categoryId: +categoryId,
-                ingredient_quentity: +ingredient_quentity
+                ingredient_quentity: quantity
             })
 
             res.json(result)
+        } catch (err) {
+            res.json(err)
+        }
+    }
+
+    static async update(req, res) {
+        try {
+            const { id, recipeId } = req.body;
+            let ingredient_quentity = await ingredient.count({
+                where: { recipeId: recipeId },
+              });
+
+            let result = await recipe_category.update(
+                {
+                  ingredient_quentity
+                },
+                {
+                  where: {
+                    id,
+                  },
+                }
+              );
+        
+              res.json(result);
         } catch (err) {
             res.json(err)
         }
