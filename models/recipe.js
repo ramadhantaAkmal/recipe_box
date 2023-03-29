@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       recipe.hasMany(models.ingredient);
       recipe.belongsTo(models.user);
+      recipe.hasMany(models.ingredient);
     }
   }
   recipe.init(
