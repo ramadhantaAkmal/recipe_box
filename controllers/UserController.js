@@ -3,9 +3,13 @@ const bcrypt = require("bcryptjs/dist/bcrypt");
 class UserController {
   static async detailUser(req, res) {
     try {
-      const id = +req.params.id;
-      let users = await user.findByPk(id);
-      res.json(users);
+      const data = {
+        id: req.user_id,
+        username: req.username,
+      };
+      let userData = await user.findByPk(req.user_id);
+      userData.password = "aaaaaa";
+      res.render("users/profilePage.ejs", { userData, data });
     } catch (error) {
       res.json(error);
     }
@@ -13,10 +17,10 @@ class UserController {
 
   static async updateUser(req, res) {
     try {
-      const id = +req.params.id;
-      const { username, email} = req.body;
+      const id = +req.user_id;
+      const { username, email } = req.body;
 
-      let {password} = req.body
+      let { password } = req.body;
 
       password = await bcrypt.hash(password, 10);
 
@@ -33,7 +37,11 @@ class UserController {
         }
       );
 
-      res.json(result);
+      result[0] === 1
+        ? res.redirect("/users")
+        : res.json({
+            message: `Profile not updated`,
+          });
     } catch (error) {
       res.json(error);
     }

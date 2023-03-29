@@ -23,11 +23,11 @@
           <li><a href="/recipes">My Recipes</a></li>
           <li>
             <div class="dropdown">
-              <span><i class="fa-solid fa-user"></i> <%= data.username %></span>
+              <span><i class="fa-solid fa-user"></i> Profile</span>
               <div class="dropdown-content">
-                <a class="dropdown-text" href="/users/<%= data.id %>">Profile</a>
+                <a class="dropdown-text" href="/users">Detail</a>
                 <hr class="divider">
-                <a class="dropdown-text" href="/logout">Logout</a>
+                <a id="logout" class="dropdown-text" href="/logout">Logout</a>
                 <br><hr class="divider">
               </div>
             </div>

@@ -1,5 +1,6 @@
 <%- include('../layouts/header.ejs'); -%>
 
+<a class="btn btn-primary btn-sm mb-2" href="/recipes/add">Add Recipes</a>
 <h5 class="">List recipes</h5>
 
 <!-- <div class="row">
@@ -18,7 +19,7 @@
         <div class="border rounded grid-hover">
           <img class="img-fluid rounded" src="/img/food-head.jpg" alt="" />
           <div class="p-2">
-            <div class="fs-5"><%= recipe.name %></div>
+            <div class="fs-5 text-body"><%= recipe.name %></div>
             <!-- <div class="text-description-grid"><%= recipe.description %></div> -->
             <hr class="divider" />
             <div class="text-description-time">
@@ -27,6 +28,13 @@
             <div class="text-description-time">
               Cook time : <%= recipe.cooking_time %> hours
             </div>
+            <br>
+            <a class="btn btn-sm btn-danger del" href="/recipes/delete/<%= recipe.id %>">
+              <i class="fa-solid fa-trash"></i>
+            </a>
+            <a class="btn btn-sm btn-warning" href="#">
+              <i class="fa-solid fa-pencil"></i>
+            </a>
             <!-- <div class="text-description-grid text-end">Author : <%= recipe.user.username %></div> -->
           </div>
         </div>

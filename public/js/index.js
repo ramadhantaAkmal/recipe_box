@@ -8,6 +8,36 @@ $(document).ready(function () {
     }
   );
 
+  $(".del").click(function () {
+    if (!confirm("Do you want to delete")) {
+      return false;
+    }
+  });
+
+  $("#logout").click(function () {
+    if (!confirm("Do you want to logout")) {
+      return false;
+    }
+  });
+
+  $(".input-profile").prop("disabled", true);
+
+  $(".pwd-verif").hide();
+
+  $("#hide-update").click(function () {
+    $(".pwd-verif").hide();
+    $(".btn-show-update").show();
+    $(".input-profile").prop("disabled", true);
+    $(".pwd-null").val("aaaaaa");
+  });
+
+  $("#show-update").click(function () {
+    $(".pwd-verif").show();
+    $(".btn-show-update").hide();
+    $(".input-profile").prop("disabled", false);
+    $(".pwd-null").val("");
+  });
+
   //   let sliderImages = document.querySelectorAll(".slide"),
   //     arrowLeft = document.querySelector("#arrow-left"),
   //     arrowRight = document.querySelector("#arrow-right"),
