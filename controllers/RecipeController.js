@@ -7,6 +7,7 @@ class RecipeController {
         include: [user],
         order: [["id", "ASC"]],
       });
+      // res.json(recipes)
       if (req.username) {
         res.render("dashboard.ejs", { recipes });
       } else {
