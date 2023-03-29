@@ -1,0 +1,60 @@
+<%- include('../layouts/header.ejs'); -%>
+<div class="row justify-content-center" style="width: 100rem">
+  <div class="col-6">
+    <h3>Edit Recipe</h3>
+    <form action="/recipes/update/<%= resultRC.id %>" method="post">
+      <div class="mb-3">
+        <label for="">Name</label>
+        <input
+          value="<%= resultRC.name %>"
+          type="text"
+          class="form-control"
+          name="name"
+          placeholder="Enter Recipe Name..."
+        />
+      </div>
+      <label for="">Description</label>
+      <div class="mb-3">
+        <textarea id="" name="description" rows="4" cols="50">
+<%= resultRC.description %></textarea
+        >
+      </div>
+      <div class="mb-3">
+        <label for="">Preparation time</label>
+        <input
+          value="<%= resultRC.preparation_time %>"
+          type="text"
+          class="form-control"
+          name="preparation_time"
+          placeholder="Enter Preparation time..."
+        />
+      </div>
+      <div class="mb-3">
+        <label for="">Cooking time</label>
+        <input
+          value="<%= resultRC.cooking_time %>"
+          type="text"
+          class="form-control"
+          name="cooking_time"
+          placeholder="Enter Cooking time..."
+        />
+      </div>
+
+      <div class="mb-3">
+        <select name="categoryId" id="categoryId">
+          <% categoryList.forEach(category => { %>
+          <option value=<%= category.id%>><%= category.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="mb-3">
+        <input
+          class="btn btn-success w-100"
+          type="submit"
+          value="Update Recipe"
+        />
+      </div>
+    </form>
+  </div>
+</div>
+<%- include('../layouts/footer.ejs'); -%>

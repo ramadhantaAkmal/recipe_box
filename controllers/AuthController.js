@@ -84,6 +84,7 @@ class AuthController {
       }
       res.status(400).json({ message: "Invalid Credentials" });
     } catch (error) {
+      console.log(error);
       res.json(error);
     }
   }
