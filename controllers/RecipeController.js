@@ -1,4 +1,4 @@
-const { recipe, user } = require("../models");
+const { recipe, user, ingredient } = require("../models");
 
 class RecipeController {
   static async listRecipe(req, res) {
@@ -29,7 +29,7 @@ class RecipeController {
         order: [["id", "ASC"]],
       });
       // res.json(recipes);
-      console.log(recipes);
+      // console.log(recipes);
       res.render("recipes/index.ejs", { recipes });
     } catch (error) {
       res.json(error);
@@ -44,13 +44,31 @@ class RecipeController {
     try {
       const { name, description, preparation_time, cooking_time } = req.body;
       const userId = req.user_id;
-      const result = await recipe.create({
-        name,
-        description,
-        preparation_time,
-        cooking_time,
-        userId,
-      });
+      let ingredients = [];
+
+      let counter = 1;
+
+      while (req.body[`name${counter}`]) {
+        ingredients.push({
+          name: req.body[`name${counter}`],
+          quentity: +req.body[`quantity${counter}`],
+        });
+        counter++;
+      }
+
+      const result = await recipe.create(
+        {
+          name,
+          description,
+          preparation_time,
+          cooking_time,
+          userId,
+          ingredients,
+        },
+        {
+          include: [ingredient],
+        }
+      );
       res.json(result);
     } catch (error) {
       res.json(error);

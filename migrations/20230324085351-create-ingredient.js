@@ -12,7 +12,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      quentity: {
+      quantity: {
         type: Sequelize.INTEGER
       },
       recipeId: {
