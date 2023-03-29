@@ -27,32 +27,55 @@ class RecipeController {
     const user_id = req.user_id;
     try {
       let recipes = await recipe.findAll({
-        include: [user,ingredient],
+        include: [user, ingredient],
         where: {
           userId: user_id,
         },
         order: [["id", "ASC"]],
       });
-     
+
       console.log(user_id);
+      // res.json(recipes);
+      // console.log(recipes);
       res.render("recipes/index.ejs", { recipes });
     } catch (error) {
       res.json(error);
     }
   }
 
+  static showAddRecipes(req, res) {
+    res.render("recipes/addPage.ejs");
+  }
+
   static async addRecipes(req, res) {
     try {
-      const { name, description, preparation_time, cooking_time, userId } =
-        req.body;
-      
-      const recipeNew = await recipe.create({
-        name,
-        description,
-        preparation_time,
-        cooking_time,
-        userId,
-      });
+      const { name, description, preparation_time, cooking_time } = req.body;
+      const userId = req.user_id;
+      let ingredients = [];
+
+      let counter = 1;
+
+      while (req.body[`name${counter}`]) {
+        ingredients.push({
+          name: req.body[`name${counter}`],
+          quentity: +req.body[`quantity${counter}`],
+        });
+        counter++;
+      }
+
+      const recipeNew = await recipe.create(
+        {
+          name,
+          description,
+          preparation_time,
+          cooking_time,
+          userId,
+          ingredients,
+        },
+        {
+          include: [ingredient],
+        }
+      );
 
       const rcNew = await recipe_category.create({
         recipeId: recipeNew.id,
