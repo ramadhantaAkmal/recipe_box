@@ -45,7 +45,8 @@ class RecipeController {
     try {
       const { name, description, preparation_time, cooking_time, userId } =
         req.body;
-      const result = await recipe.create({
+      
+      const recipeNew = await recipe.create({
         name,
         description,
         preparation_time,
@@ -53,7 +54,12 @@ class RecipeController {
         userId,
       });
 
-      res.json(result);
+      const rcNew = await recipe_category.create({
+        recipeId: recipeNew.id,
+        categoryId: 11,
+      });
+
+      res.json(rcNew);
     } catch (error) {
       console.log(error);
       res.json(error);
@@ -214,22 +220,6 @@ class RecipeController {
       res.render("recipes/detailPage.ejs", { resultRC });
     } catch (err) {
       console.log(err);
-      res.json(err);
-    }
-  }
-
-  //added recipe_category after blank recipe created
-  static async createRC(req, res) {
-    try {
-      const { recipeId } = req.body;
-
-      let result = await recipe_category.create({
-        recipeId: +recipeId,
-        categoryId: 11,
-      });
-
-      res.json(result);
-    } catch (err) {
       res.json(err);
     }
   }
