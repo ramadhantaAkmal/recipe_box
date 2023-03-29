@@ -1,4 +1,55 @@
 $(document).ready(function () {
+  let counter = 1;
+
+  $("#addButton").click(function () {
+    let newTextBox = $(document.createElement("div"))
+      .attr("class", "row g-3")
+      .attr("id", "form" + counter);
+
+    newTextBox
+      .after()
+      .html(
+        "<div class=" +
+          '"row g-3"' +
+          "><div class=" +
+          '"col-md-6"' +
+          "><input type=" +
+          '"text"' +
+          "class=" +
+          '"form-control"' +
+          "name=" +
+          '"name' + counter + '"' +
+          "placeholder=" +
+          '"name"' +
+          "/></div><div class=" +
+          '"col-md-2"' +
+          "><input type=" +
+          '"number"' +
+          "class=" +
+          '"form-control"' +
+          "name=" +
+          '"quantity' + counter + '"' +
+          "placeholder=" +
+          '"quantity"' +
+          "/></div></div>"
+      );
+
+    newTextBox.appendTo("#form-ingredient");
+
+    counter++;
+  });
+
+  $("#deleteButton").click(function () {
+    if (counter == 1) {
+      alert("No more textbox to remove");
+      return false;
+    }
+
+    counter--;
+
+    $("#form" + counter).remove();
+  });
+
   $(".grid-hover").hover(
     function () {
       $(this).css("background-color", "#ededed");
