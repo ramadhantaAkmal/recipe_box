@@ -22,7 +22,7 @@ $(document).ready(function () {
           "placeholder=" +
           '"name"' +
           "/></div><div class=" +
-          '"col-md-2"' +
+          '"col-md-3"' +
           "><input type=" +
           '"number"' +
           "class=" +

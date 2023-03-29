@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class ingredient extends Model {
     /**
@@ -14,13 +12,27 @@ module.exports = (sequelize, DataTypes) => {
       ingredient.belongsTo(models.recipe);
     }
   }
-  ingredient.init({
-    name: DataTypes.STRING,
-    quentity: DataTypes.INTEGER,
-    recipeId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'ingredient',
-  });
+  ingredient.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      name: DataTypes.STRING,
+      quentity: DataTypes.INTEGER,
+      recipeId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "recipes",
+          key: "id",
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "ingredient",
+    }
+  );
   return ingredient;
 };
