@@ -43,13 +43,19 @@ class RecipeController {
     }
   }
 
-  static showAddRecipes(req, res) {
-    res.render("recipes/addPage.ejs");
+  static async showAddRecipes(req, res) {
+    try {
+      let categoryList = await category.findAll();
+      res.render("recipes/addPage.ejs", { categoryList });
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
 
   static async addRecipes(req, res) {
     try {
-      const { name, description, preparation_time, cooking_time } = req.body;
+      const { name, description, preparation_time, cooking_time, categoryId } = req.body;
       const userId = req.user_id;
       let ingredients = [];
 
@@ -58,7 +64,7 @@ class RecipeController {
       while (req.body[`name${counter}`]) {
         ingredients.push({
           name: req.body[`name${counter}`],
-          quentity: +req.body[`quantity${counter}`],
+          quantity: +req.body[`quantity${counter}`],
         });
         counter++;
       }
@@ -79,10 +85,10 @@ class RecipeController {
 
       const rcNew = await recipe_category.create({
         recipeId: recipeNew.id,
-        categoryId: 11,
+        categoryId,
       });
 
-      res.json(rcNew);
+      res.redirect("/recipes");
     } catch (error) {
       console.log(error);
       res.json(error);
@@ -107,25 +113,35 @@ class RecipeController {
     } catch (error) {}
   }
 
-  static async getRecipeByID(req, res) {
-    try {
-      const id = +req.params.id;
-      console.log(id);
+  // static async getRecipeByID(req, res) {
+  //   try {
+  //     const id = +req.params.id;
 
-      const recipes = await recipe.findByPk(id);
-      // console.log(recipes);
-      res.render("recipes/detailPage.ejs", { recipes });
-      // res.json(recipes);
-    } catch (error) {
-      res.json(error);
-    }
-  }
+  //     const resultRC = await recipe.findByPk(id);
+  //     // console.log(recipes);
+  //     res.render("recipes/detailPage.ejs", { resultRC });
+  //     // res.json(recipes);
+  //   } catch (error) {
+  //     res.json(error);
+  //   }
+  // }
 
   static async updateRecipe(req, res) {
     try {
       const id = +req.params.id;
       const { name, description, preparation_time, cooking_time, categoryId } =
         req.body;
+
+        let ingredients = [];
+
+        while (req.body[`name${counter}`]) {
+          ingredients.push({
+            name: req.body[`name${counter}`],
+            quantity: +req.body[`quantity${counter}`],
+          });
+          counter++;
+        }
+
       let result = await recipe.update(
         {
           name,
@@ -203,7 +219,7 @@ class RecipeController {
   }
 
   // get recipe data in details
-  static async getRecipeDetails(req, res) {
+  static async getRecipeByID(req, res) {
     try {
       const id = +req.params.id;
 

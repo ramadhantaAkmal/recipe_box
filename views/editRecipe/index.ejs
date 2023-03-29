@@ -3,42 +3,48 @@
   <div class="col-6">
     <h3>Edit Recipe</h3>
     <form action="/recipes/update/<%= resultRC.id %>" method="post">
-      <div class="mb-3">
-        <label for="">Name</label>
+      <div class="mb-2">
+        <div class="fw-bolder">Name :</div>
         <input
           value="<%= resultRC.name %>"
-          type="text"
-          class="form-control"
           name="name"
-          placeholder="Enter Recipe Name..."
-        />
-      </div>
-      <label for="">Description</label>
-      <div class="mb-3">
-        <textarea id="" name="description" rows="4" cols="50">
-<%= resultRC.description %></textarea
-        >
-      </div>
-      <div class="mb-3">
-        <label for="">Preparation time</label>
-        <input
-          value="<%= resultRC.preparation_time %>"
           type="text"
           class="form-control"
-          name="preparation_time"
-          placeholder="Enter Preparation time..."
+          placeholder="name recipe"
         />
       </div>
-      <div class="mb-3">
-        <label for="">Cooking time</label>
-        <input
-          value="<%= resultRC.cooking_time %>"
-          type="text"
+      <div class="mb-2">
+        <div class="fw-bolder">Description :</div>
+        <textarea
           class="form-control"
-          name="cooking_time"
-          placeholder="Enter Cooking time..."
-        />
+          id="exampleFormControlTextarea1"
+          rows="3"
+          name="description"
+          placeholder="description"
+        ><%= resultRC.cooking_time %></textarea>
       </div>
+      <div class="row g-2 mb-2">
+          <div class="col-6">
+            <div class="fw-bolder">Preparation Time :</div>
+            <input
+              value="<%= resultRC.preparation_time %>"
+              name="preparation_time"
+              type="number"
+              class="form-control"
+              placeholder="In hours"
+            />
+          </div>
+          <div class="col-6">
+            <div class="fw-bolder">Cook Time :</div>
+            <input
+              value="<%= resultRC.cooking_time %>"
+              name="cooking_time"
+              type="number"
+              class="form-control"
+              placeholder="In hours"
+            />
+          </div>
+        </div>
 
       <div class="mb-3">
         <select name="categoryId" id="categoryId">
@@ -46,6 +52,24 @@
           <option value=<%= category.id%>><%= category.name %></option>
           <% }) %>
         </select>
+      </div>
+      <div class="mb-4" id="form-ingredient">
+        <div class="fw-bolder">Ingredient :</div>
+        <div class="row g-0 mt-1">
+          <div class="col-1 col-md-0">
+            <a id="addButton" href="#"
+              ><i class="fa-solid fa-circle-plus fa-xl"></i
+            ></a>
+          </div>
+          <div class="col-1 col-md-0">
+            <a id="deleteButton" href="#"
+              ><i
+                class="fa-sharp fa-solid fa-circle-xmark fa-xl"
+                style="color: #f60909"
+              ></i
+            ></a>
+          </div>
+        </div>
       </div>
       <div class="mb-3">
         <input

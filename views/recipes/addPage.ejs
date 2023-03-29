@@ -48,6 +48,13 @@
             />
           </div>
         </div>
+        <div class="mb-4">
+          <select name="categoryId" id="categoryId">
+            <% categoryList.forEach(category => { %>
+            <option value=<%= category.id%>><%= category.name %></option>
+            <% }) %>
+          </select>
+        </div>
         <div class="mb-4" id="form-ingredient">
           <div class="fw-bolder">Ingredient :</div>
           <div class="row g-0 mt-1">

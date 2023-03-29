@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
       },
       name: DataTypes.STRING,
-      quentity: DataTypes.INTEGER,
+      quantity: DataTypes.INTEGER,
       recipeId: {
         type: DataTypes.INTEGER,
         references: {
