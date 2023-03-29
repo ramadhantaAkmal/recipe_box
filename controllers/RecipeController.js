@@ -13,7 +13,7 @@ class RecipeController {
         include: [user],
         order: [["id", "ASC"]],
       });
-      if (req.username) {
+      if (req.user_id) {
         res.render("dashboard.ejs", { recipes });
       } else {
         res.render("landingPage.ejs", { recipes });
@@ -39,10 +39,6 @@ class RecipeController {
     } catch (error) {
       res.json(error);
     }
-  }
-
-  static showAddRecipes(req, res) {
-    res.render("recipes/addPage.ejs");
   }
 
   static async addRecipes(req, res) {
@@ -79,7 +75,9 @@ class RecipeController {
       });
 
       result === 1
-        ? res.redirect("/recipes")
+        ? res.json({
+            message: `Berhasil deleted ${id}`,
+          })
         : res.json({
             message: `Id ${id} not deleted`,
           });
@@ -89,8 +87,12 @@ class RecipeController {
   static async getRecipeByID(req, res) {
     try {
       const id = +req.params.id;
+      console.log(id);
+
       const recipes = await recipe.findByPk(id);
+      // console.log(recipes);
       res.render("recipes/detailPage.ejs", { recipes });
+      // res.json(recipes);
     } catch (error) {
       res.json(error);
     }
