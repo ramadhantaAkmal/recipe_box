@@ -15,11 +15,10 @@
 
 hr.divider {
     margin: 0em;
+    color: black !important;
 }
 
-li,
-a,
-button {
+header li {
     /* font-family: "Montserrat", sans-serif; */
     font-weight: 500;
     font-size: 16px;
@@ -29,12 +28,20 @@ button {
 
 header {
     display: flex;
+    position: fixed;
     justify-content: space-between;
     /* justify-content: flex-end; */
     align-items: center;
     padding: 30px 10%;
     height: 10px;
+    top: 0;
+    background-color: white;
+    width: 100%;
     /* background-color: darkgrey; */
+}
+
+header a {
+    color: black !important;
 }
 
 .logo {
@@ -78,6 +85,7 @@ button:hover {
 }
 
 .contentcustom {
+    margin-top: 50px;
     padding: 30px 10%;
 }
 
@@ -91,17 +99,57 @@ button:hover {
 .text-description-grid {
     font-size: 12px;
     text-align: justify;
+    color: black !important;
 }
 
 .text-description {
     text-align: justify;
+    color: black !important;
 }
 
 .text-description-time {
     font-size: 10px;
+    color: black !important;
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
 
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    border-radius: 10%;
+}
+
+.dropdown-text {
+    font-size: 15px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.box-profile {
+    height: min-content;
+    width: auto;
+}
+
+.profile-img {
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    object-fit: inherit;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
 .slide {
     margin: 0;

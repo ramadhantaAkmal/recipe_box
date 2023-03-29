@@ -43,5 +43,11 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "recipe",
     }
   );
+  recipe.addHook("beforeValidate", (recipe, options) => {
+    recipe.name = (recipe.name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1)))
+      .join(" ");
+  });
   return recipe;
 };

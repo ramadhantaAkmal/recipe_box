@@ -22,7 +22,15 @@
         <ul class="nav__links">
           <li><a href="/recipes">My Recipes</a></li>
           <li>
-            <a class="cta" href="/logout"><i class="fa-solid fa-user"></i> Logout</a>
+            <div class="dropdown">
+              <span><i class="fa-solid fa-user"></i> Profile</span>
+              <div class="dropdown-content">
+                <a class="dropdown-text" href="/users">Detail</a>
+                <hr class="divider">
+                <a id="logout" class="dropdown-text" href="/logout">Logout</a>
+                <br><hr class="divider">
+              </div>
+            </div>
           </li>
         </ul>
     </header>

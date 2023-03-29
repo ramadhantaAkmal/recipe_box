@@ -5,15 +5,13 @@ const config = process.env;
 class Authorization {
   static verifyToken(req, res, next) {
     try {
-      // const bearerHeader = req.headers["authorization"];
-      const bearerHeader = req.cookies.authorization;
+      const bearerHeader = req.cookies.authorization || req.headers["authorization"];
       const bearer = bearerHeader.split(" ");
-
       if (typeof bearerHeader !== "undefined" && bearer[0] === "Bearer") {
         const bearerToken = bearer[1];
         const decoded = jwt.verify(bearerToken, config.TOKEN_KEY);
-        // console.log(decoded.user_id)
         req.user_id = decoded.user_id;
+        req.username = decoded.username;
         return next();
       } else {
         return res.redirect("/login")

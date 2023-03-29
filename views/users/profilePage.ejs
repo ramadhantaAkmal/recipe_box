@@ -1,0 +1,34 @@
+<%- include('../layouts/header.ejs'); -%>
+
+<div class="box-profile border p-3">
+  <div class="row gx-1">
+    <div class="col">
+      <img class="profile-img" src="/img/profile.png" alt="" />
+    </div>
+    <div class="col">
+      <form action="/users" method="post">
+        <div class="mb-3">
+            <label for="" class="form-label">Username</label>
+            <input name="username" class="input-profile form-control" value=<%= userData.username %> type="text" class="form-control">
+          </div>
+        <div class="mb-3">
+          <label for="" class="form-label">Email</label>
+          <input name="email" class="input-profile form-control" value=<%= userData.email %> type="email" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="" class="form-label">Password</label>
+          <input name="password" value="<%= userData.password %>" type="password" class="input-profile form-control pwd-null" id="pwd">
+        </div>
+        <div class="mb-3 pwd-verif">
+          <label for="" class="form-label">Verify Password</label>
+          <input name="" value="<%= userData.password %>" type="password" class="input-profile form-control pwd-null" id="pwd-verif">
+        </div>
+        <button type="submit" class="btn btn-success pwd-verif">Save</button>
+        <a id="hide-update" class="btn btn-danger pwd-verif">Cancel</a>
+        <a id="show-update" class="btn btn-success btn-show-update">Update</a>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../layouts/footer.ejs'); -%>

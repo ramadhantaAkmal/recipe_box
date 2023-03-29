@@ -1,27 +1,28 @@
 <%- include('../../layouts/headerNoAuth.ejs'); -%>
 
-<h3>Login Page</h3>
-<form id="basic-form" action="/login" method="post">
-  <div class="mb-3">
-    <label for="">Email</label>
-    <input
-      type="text"
-      class="form-control"
-      name="email"
-      placeholder="Submit email..."
-    />
+<div class="row gx-3">
+  <div class="col">
+    <img class="rounded img-fluid" src="/img/food-head.jpg" alt="" />
   </div>
-  <div class="mb-3">
-    <label for="">Password</label>
-    <input
-      type="text"
-      class="form-control"
-      name="password"
-      placeholder="Submit password..."
-    />
+  <div class="col">
+    <form id="basic-form" action="/register" method="post">
+      <h3>Register</h3><br>
+      <div class="mb-3">
+          <label for="">Username</label> 
+          <input type="text" class="form-control" name="username" placeholder="Username">
+      </div>
+        <div class="mb-3">
+            <label for="">Email</label> 
+            <input type="email" class="form-control" name="email" placeholder="Email">
+        </div>
+        <div class="mb-3">
+            <label for="">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="Password">
+        </div>
+        <div class="mb-3">
+            <input class="btn btn-primary w-100"  type="submit" value="Register">
+        </div>
+    </form>
   </div>
-  <div class="mb-3">
-    <input class="btn btn-primary w-100" type="submit" value="Login" />
-  </div>
-</form>
+</div>
 <%- include('../../layouts/footer.ejs'); -%>
