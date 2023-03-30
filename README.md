@@ -21,7 +21,7 @@ miniproject submission for codeacademy bootcamp purposes
 1. git clone github.com/ramadhantaAkmal/recipe_box
 2. npm install
 3. npx sequelize-cli db:create
-4. npx sequelize-cli db:migrate
+4. npx sequelize-cli db:migrate && sequelize-cli db:seed:all
 5. create .env
 5. npm start
 ```
