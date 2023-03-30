@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db-install": "sequelize-cli db:create && sequelize-cli db:migrate"
+    "db-install": "sequelize-cli db:create && sequelize-cli db:migrate && sequelize-cli db:seed:all"
   },
   "author": "",
   "license": "ISC",
