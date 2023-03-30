@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const ingredient = require("./ingredient");
 module.exports = (sequelize, DataTypes) => {
   class recipe extends Model {
     /**
@@ -31,6 +32,18 @@ module.exports = (sequelize, DataTypes) => {
         }
       );
     }
+
+    static async setIngredients(ingredients) {
+      const ingredient = sequelize.models.ingredient;
+      const {name, quantity, recipeId} = ingredients;
+
+      await ingredient.create({
+        name,
+        quantity,
+        recipeId
+    });
+    }
+
 
     static async getRecipeById(id) {
       const RecipeCategory = sequelize.models.recipe_category;
@@ -69,7 +82,6 @@ module.exports = (sequelize, DataTypes) => {
           ingredients,
         };
       }
-
       return resultRC;
     }
 
@@ -113,6 +125,7 @@ module.exports = (sequelize, DataTypes) => {
     static async updateRecipe(id, body) {
       const { name, description, preparation_time, cooking_time, categoryId } =
         body;
+      const Ingredient = sequelize.models.ingredient;
 
       let counter = 1;
 
@@ -138,19 +151,17 @@ module.exports = (sequelize, DataTypes) => {
         counter++;
       }
 
-      let result = await recipe.update(
-        {
-          name,
-          description,
-          preparation_time,
-          cooking_time,
+      const deleteIngredient = await Ingredient.destroy({
+        where: {
+          recipeId: id,
         },
-        {
-          where: {
-            id,
-          },
-        }
-      );
+      });
+
+      for (let i = 0; i < ingredients.length; i++) {
+        const ingredient = ingredients[i];
+        
+        await recipe.setIngredients(ingredient);
+      }
 
       let rc = await recipe.findByPk(id).then((recipe) => {
         if (!recipe) {
