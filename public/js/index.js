@@ -1,5 +1,55 @@
 $(document).ready(function () {
   let counter = 1;
+  let counterUpdate = 1
+
+  $("#addUpdateButton").click(function () {
+    let newTextBox = $(document.createElement("div"))
+      .attr("class", "mt-3")
+      .attr("id", "form" + counterUpdate);
+
+    newTextBox
+      .after()
+      .html(
+        "<div class=" +
+          '"row g-3"' +
+          "><div class=" +
+          '"col-md-6"' +
+          "><input type=" +
+          '"text"' +
+          "class=" +
+          '"form-control"' +
+          "name=" +
+          '"name' + counterUpdate + '"' +
+          "placeholder=" +
+          '"name"' +
+          "/></div><div class=" +
+          '"col-md-3"' +
+          "><input type=" +
+          '"number"' +
+          "class=" +
+          '"form-control"' +
+          "name=" +
+          '"quantity' + counterUpdate + '"' +
+          "placeholder=" +
+          '"quantity"' +
+          "/></div></div>"
+      );
+
+    newTextBox.appendTo("#form-ingredient");
+
+    counterUpdate++;
+  });
+
+  $("#deleteUpdateButton").click(function () {
+    if (counterUpdate == 1) {
+      alert("No more textbox to remove");
+      return false;
+    }
+
+    counterUpdate--;
+
+    $("#form" + counterUpdate).remove();
+  });
 
   $("#addButton").click(function () {
     let newTextBox = $(document.createElement("div"))

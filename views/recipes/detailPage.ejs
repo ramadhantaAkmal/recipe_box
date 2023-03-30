@@ -13,16 +13,20 @@
   </div>
 </div>
 
-<div><strong>Category</strong> :
-  <% resultRC.categories.forEach(category => { %> 
-    <%= category.name %>
+<div>
+  <strong>Category</strong> : <% resultRC.categories.forEach((category, index) => { %>
+    <%= category.name %> 
+    <% if((index+1) !== resultRC.categories.length){ %>
+      ,
+    <% } %>
   <% }) %>
 </div>
 
-<div><strong>Ingredients :</strong>
+<div>
+  <strong>Ingredients :</strong>
   <ul>
     <% resultRC.ingredients.forEach(ingredient => { %>
-      <li><%= ingredient.name %></li>
+    <li><%= ingredient.name %></li>
     <% }) %>
   </ul>
 </div>
