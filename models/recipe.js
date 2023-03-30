@@ -35,15 +35,14 @@ module.exports = (sequelize, DataTypes) => {
 
     static async setIngredients(ingredients) {
       const ingredient = sequelize.models.ingredient;
-      const {name, quantity, recipeId} = ingredients;
+      const { name, quantity, recipeId } = ingredients;
 
       await ingredient.create({
         name,
         quantity,
-        recipeId
-    });
+        recipeId,
+      });
     }
-
 
     static async getRecipeById(id) {
       const RecipeCategory = sequelize.models.recipe_category;
@@ -97,8 +96,8 @@ module.exports = (sequelize, DataTypes) => {
 
       while (body[`name${counter}`]) {
         ingredients.push({
-          name: req.body[`name${counter}`],
-          quantity: +req.body[`quantity${counter}`],
+          name: body[`name${counter}`],
+          quantity: +body[`quantity${counter}`],
         });
         counter++;
       }
@@ -120,6 +119,8 @@ module.exports = (sequelize, DataTypes) => {
         .then((recipe) => {
           recipe.setCategories(categoryId);
         });
+
+        return recipeNew
     }
 
     static async updateRecipe(id, body) {
@@ -159,9 +160,23 @@ module.exports = (sequelize, DataTypes) => {
 
       for (let i = 0; i < ingredients.length; i++) {
         const ingredient = ingredients[i];
-        
+
         await recipe.setIngredients(ingredient);
       }
+
+      let result = await recipe.update(
+        {
+          name,
+          description,
+          preparation_time,
+          cooking_time,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
 
       let rc = await recipe.findByPk(id).then((recipe) => {
         if (!recipe) {
