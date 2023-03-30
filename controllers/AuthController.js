@@ -45,9 +45,10 @@ class AuthController {
       //   }
       // );
 
-      res.status(201).json({
-        message: "Success register",
-      });
+      // res.status(201).json({
+      //   message: "Success register",
+      // });
+      res.redirect("/login");
     } catch (error) {
       res.json(error);
     }
@@ -72,14 +73,14 @@ class AuthController {
             expiresIn: "2h",
           }
         );
-
-        res.cookie("authorization", `Bearer ${token}`);
-        res.redirect("/home");
-
+        
         // res.status(200).json({
         //   message: "Success login",
         //   token: token,
         // });
+        res.cookie("authorization", `Bearer ${token}`);
+        res.redirect("/home");
+
         return;
       }
       res.status(400).json({ message: "Invalid Credentials" });

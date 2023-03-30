@@ -9,6 +9,7 @@ class UserController {
       };
       let userData = await user.findByPk(req.user_id);
       userData.password = "aaaaaa";
+      // res.json(userData)
       res.render("users/profilePage.ejs", { userData, data });
     } catch (error) {
       res.json(error);
@@ -36,6 +37,14 @@ class UserController {
           },
         }
       );
+
+      // result[0] === 1
+      //   ? res.json({
+      //     message: "Berhasil Update"
+      //   })
+      //   : res.json({
+      //       message: `Profile not updated`,
+      //     });
 
       result[0] === 1
         ? res.redirect("/users")
