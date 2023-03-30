@@ -51,7 +51,7 @@
         <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 p-2">
             <% categoryList.forEach(category => { %>
               <div class="form-check col">
-                <input class="form-check-input" name="check[<%= category.id %>]" type="checkbox" value="<%= category.id %>" id="flexCheckDefault">
+                <input class="form-check-input" name="categoryId[]" type="checkbox" value="<%= category.id %>" id="flexCheckDefault">
                 <label class="form-check-label" for="flexCheckDefault">
                   <%= category.name %>
                 </label>

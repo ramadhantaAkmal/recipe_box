@@ -20,13 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      recipeId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: "recipes",
-          key: "id",
-        },
-      },
+      recipeId: DataTypes.INTEGER,
       categoryId: DataTypes.INTEGER,
     },
     {
