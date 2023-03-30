@@ -47,11 +47,10 @@
         </div>
 
       <div class="mb-3">
-        <select name="categoryId" id="categoryId">
-          <% categoryList.forEach(category => { %>
-          <option value=<%= category.id%>><%= category.name %></option>
-          <% }) %>
-        </select>
+        <% categoryList.forEach(category => { %>
+          <input type="checkbox" id="" name="categoryId[]" value=<%= category.id %>>
+          <label for=<%= category.name %>> <%= category.name %></label><br>
+        <% }) %>
       </div>
       <div class="mb-4" id="form-ingredient">
         <div class="fw-bolder">Ingredient :</div>

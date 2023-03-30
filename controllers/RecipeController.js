@@ -35,8 +35,6 @@ class RecipeController {
       });
 
       console.log(user_id);
-      // res.json(recipes);
-      // console.log(recipes);
       res.render("recipes/index.ejs", { recipes });
     } catch (error) {
       res.json(error);
@@ -55,38 +53,11 @@ class RecipeController {
 
   static async addRecipes(req, res) {
     try {
-      const { name, description, preparation_time, cooking_time, categoryId } = req.body;
+      
+      const body = req.body;
       const userId = req.user_id;
-      let ingredients = [];
 
-      let counter = 1;
-
-      while (req.body[`name${counter}`]) {
-        ingredients.push({
-          name: req.body[`name${counter}`],
-          quantity: +req.body[`quantity${counter}`],
-        });
-        counter++;
-      }
-
-      const recipeNew = await recipe.create(
-        {
-          name,
-          description,
-          preparation_time,
-          cooking_time,
-          userId,
-          ingredients,
-        },
-        {
-          include: [ingredient],
-        }
-      );
-
-      const rcNew = await recipe_category.create({
-        recipeId: recipeNew.id,
-        categoryId,
-      });
+      await recipe.addRecipe(userId,body);
 
       res.redirect("/recipes");
     } catch (error) {
@@ -104,71 +75,23 @@ class RecipeController {
       });
 
       result === 1
-        ? res.json({
-            message: `Berhasil deleted ${id}`,
-          })
+        ? res.redirect("/recipes")
         : res.json({
             message: `Id ${id} not deleted`,
           });
     } catch (error) {}
   }
 
-  // static async getRecipeByID(req, res) {
-  //   try {
-  //     const id = +req.params.id;
-
-  //     const resultRC = await recipe.findByPk(id);
-  //     // console.log(recipes);
-  //     res.render("recipes/detailPage.ejs", { resultRC });
-  //     // res.json(recipes);
-  //   } catch (error) {
-  //     res.json(error);
-  //   }
-  // }
-
   static async updateRecipe(req, res) {
     try {
       const id = +req.params.id;
-      const { name, description, preparation_time, cooking_time, categoryId } =
-        req.body;
+      const body =req.body;
 
-        let ingredients = [];
-
-        while (req.body[`name${counter}`]) {
-          ingredients.push({
-            name: req.body[`name${counter}`],
-            quantity: +req.body[`quantity${counter}`],
-          });
-          counter++;
-        }
-
-      let result = await recipe.update(
-        {
-          name,
-          description,
-          preparation_time,
-          cooking_time,
-        },
-        {
-          where: {
-            id,
-          },
-        }
-      );
-
-      let rc = await recipe_category.update(
-        {
-          categoryId,
-        },
-        {
-          where: {
-            recipeId: id,
-          },
-        }
-      );
+      await recipe.updateRecipe(id,body);
 
       res.redirect("/recipes");
     } catch (error) {
+      console.log(error);
       res.json(error);
     }
   }
@@ -176,41 +99,9 @@ class RecipeController {
   static async updateRecipePage(req, res) {
     try {
       const id = +req.params.id;
-
-      let result = await recipe_category.findAll({
-        where: {
-          recipeId: id,
-        },
-        include: [recipe, category],
-      });
-
-      let ingredients = await ingredient.findAll({
-        where: {
-          recipeId: id,
-        },
-      });
-
       let categoryList = await category.findAll();
 
-      let resultRC = {};
-      let categories = [];
-
-      if (result.length === 0) {
-        result = await recipe.findByPk(id);
-        resultRC = {
-          ...result.dataValues,
-          categories,
-        };
-      } else {
-        categories = result.map((el) => {
-          return el.category.dataValues;
-        });
-        resultRC = {
-          ...result[0].recipe.dataValues,
-          categories,
-          ingredients,
-        };
-      }
+      let resultRC = await recipe.getRecipeById(id);
 
       res.render("editRecipe/index.ejs", { resultRC, categoryList });
     } catch (err) {
@@ -223,39 +114,8 @@ class RecipeController {
     try {
       const id = +req.params.id;
 
-      let result = await recipe_category.findAll({
-        where: {
-          recipeId: id,
-        },
-        include: [recipe, category],
-      });
-
-      let ingredients = await ingredient.findAll({
-        where: {
-          recipeId: id,
-        },
-      });
-
-      let resultRC = {};
-      let categories = [];
-
-      if (result.length === 0) {
-        result = await recipe.findByPk(id);
-        resultRC = {
-          ...result.dataValues,
-          categories,
-        };
-      } else {
-        categories = result.map((el) => {
-          return el.category.dataValues;
-        });
-        resultRC = {
-          ...result[0].recipe.dataValues,
-          categories,
-          ingredients,
-        };
-      }
-      console.log(resultRC);
+      let resultRC = await recipe.getRecipeById(id);
+      
       res.render("recipes/detailPage.ejs", { resultRC });
     } catch (err) {
       console.log(err);

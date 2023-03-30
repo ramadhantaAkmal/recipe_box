@@ -13,7 +13,11 @@
   </div>
 </div>
 
-<div><strong>Category</strong> : <%= resultRC.categories[0].name %></div>
+<div><strong>Category</strong> :
+  <% resultRC.categories.forEach(category => { %> 
+    <%= category.name %>
+  <% }) %>
+</div>
 
 <div><strong>Ingredients :</strong>
   <ul>
