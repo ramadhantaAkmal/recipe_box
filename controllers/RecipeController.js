@@ -13,7 +13,6 @@ class RecipeController {
         include: [user],
         order: [["id", "ASC"]],
       });
-      // res.json(recipes)
       if (req.user_id) {
         res.render("dashboard.ejs", { recipes });
       } else {
@@ -35,8 +34,6 @@ class RecipeController {
         order: [["id", "ASC"]],
       });
 
-      // console.log(user_id);
-      // res.json(recipes);
       res.render("recipes/index.ejs", { recipes });
     } catch (error) {
       res.json(error);
@@ -88,14 +85,6 @@ class RecipeController {
         },
       });
 
-      // result === 1
-      //   ? res.json({
-      //     message: "Berhasil delete"
-      //   })
-      //   : res.json({
-      //       message: `Id ${id} not deleted`,
-      //     });
-
       result === 1
         ? res.redirect("/recipes")
         : res.json({
@@ -137,8 +126,6 @@ class RecipeController {
       const id = +req.params.id;
 
       let resultRC = await recipe.getRecipeById(id);
-
-      // res.json(resultRC);
 
       res.render("recipes/detailPage.ejs", { resultRC });
     } catch (err) {
