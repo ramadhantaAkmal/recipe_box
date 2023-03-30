@@ -110,17 +110,17 @@ class RecipeController {
         where: { id },
       });
 
-      // const deleteIngredient = await ingredient.destroy({
-      //   where: {
-      //     recipeId: id,
-      //   },
-      // });
+      const deleteIngredient = await ingredient.destroy({
+        where: {
+          recipeId: id,
+        },
+      });
 
-      // const deleteRC = await recipe_category.destroy({
-      //   where: {
-      //     recipeId: id,
-      //   },
-      // });
+      const deleteRC = await recipe_category.destroy({
+        where: {
+          recipeId: id,
+        },
+      });
 
       result === 1
         ? res.redirect('/recipes')
