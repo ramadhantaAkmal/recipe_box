@@ -27,7 +27,7 @@ class RecipeController {
     const user_id = req.user_id;
     try {
       let recipes = await recipe.findAll({
-        include: [user, ingredient],
+        include: [user],
         where: {
           userId: user_id,
         },
@@ -48,14 +48,14 @@ class RecipeController {
       let categoryList = await category.findAll();
       res.render("recipes/addPage.ejs", { categoryList });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    
   }
 
   static async addRecipes(req, res) {
     try {
-      const { name, description, preparation_time, cooking_time, categoryId } = req.body;
+      const { name, description, preparation_time, cooking_time, categoryId } =
+        req.body;
       const userId = req.user_id;
       let ingredients = [];
 
@@ -68,6 +68,8 @@ class RecipeController {
         });
         counter++;
       }
+
+      let recipe_categories = [];
 
       const recipeNew = await recipe.create(
         {
@@ -83,12 +85,17 @@ class RecipeController {
         }
       );
 
-      const rcNew = await recipe_category.create({
-        recipeId: recipeNew.id,
-        categoryId,
+      req.body.check.forEach((item) => {
+        recipe_categories.push({ categoryId: +item, recipeId: recipeNew.id });
       });
 
-      res.redirect("/recipes");
+      console.log(recipe_categories);
+
+      const rcNew = await recipe_category.bulkCreate(recipe_categories);
+
+      res.json(rcNew);
+
+      // res.redirect("/recipes");
     } catch (error) {
       console.log(error);
       res.json(error);
@@ -132,15 +139,15 @@ class RecipeController {
       const { name, description, preparation_time, cooking_time, categoryId } =
         req.body;
 
-        let ingredients = [];
+      let ingredients = [];
 
-        while (req.body[`name${counter}`]) {
-          ingredients.push({
-            name: req.body[`name${counter}`],
-            quantity: +req.body[`quantity${counter}`],
-          });
-          counter++;
-        }
+      while (req.body[`name${counter}`]) {
+        ingredients.push({
+          name: req.body[`name${counter}`],
+          quantity: +req.body[`quantity${counter}`],
+        });
+        counter++;
+      }
 
       let result = await recipe.update(
         {
@@ -211,6 +218,8 @@ class RecipeController {
           ingredients,
         };
       }
+
+      res.json(resultRC)
 
       res.render("editRecipe/index.ejs", { resultRC, categoryList });
     } catch (err) {

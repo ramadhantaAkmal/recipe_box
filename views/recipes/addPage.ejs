@@ -48,12 +48,15 @@
             />
           </div>
         </div>
-        <div class="mb-4">
-          <select name="categoryId" id="categoryId">
+        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 p-2">
             <% categoryList.forEach(category => { %>
-            <option value=<%= category.id%>><%= category.name %></option>
+              <div class="form-check col">
+                <input class="form-check-input" name="check[<%= category.id %>]" type="checkbox" value="<%= category.id %>" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                  <%= category.name %>
+                </label>
+              </div>  
             <% }) %>
-          </select>
         </div>
         <div class="mb-4" id="form-ingredient">
           <div class="fw-bolder">Ingredient :</div>
@@ -73,9 +76,14 @@
             </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary mb-2" href="#" role="button"
-          >Save</button
+        <button
+          type="submit"
+          class="btn btn-primary mb-2"
+          href="#"
+          role="button"
         >
+          Save
+        </button>
       </div>
     </div>
   </div>

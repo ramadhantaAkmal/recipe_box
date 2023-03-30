@@ -21,7 +21,7 @@
           rows="3"
           name="description"
           placeholder="description"
-        ><%= resultRC.cooking_time %></textarea>
+        ><%= resultRC.description %></textarea>
       </div>
       <div class="row g-2 mb-2">
           <div class="col-6">
@@ -45,13 +45,24 @@
             />
           </div>
         </div>
-
-      <div class="mb-3">
-        <select name="categoryId" id="categoryId">
-          <% categoryList.forEach(category => { %>
-          <option value=<%= category.id%>><%= category.name %></option>
-          <% }) %>
-        </select>
+      <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 p-2">
+        <% categoryList.forEach(category => { %>
+            <% if(resultRC.categories.find(temp => temp.id === category.id)){ %>
+              <div class="form-check col">
+                <input class="form-check-input" name="check[<%= category.id %>]" type="checkbox" value="<%= category.id %>" id="flexCheckDefault<%= category.id %>" checked>
+                <label class="form-check-label" for="flexCheckDefault">
+                  <%= category.name %>
+                </label>
+              </div>
+            <% } else{ %>  
+              <div class="form-check col">
+                <input class="form-check-input" name="check[<%= category.id %>]" type="checkbox" value="<%= category.id %>" id="flexCheckDefault<%= category.id %>">
+                <label class="form-check-label" for="flexCheckDefault">
+                  <%= category.name %>
+                </label>
+              </div>
+            <% } %> 
+        <% }) %>
       </div>
       <div class="mb-4" id="form-ingredient">
         <div class="fw-bolder">Ingredient :</div>
