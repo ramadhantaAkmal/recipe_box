@@ -1,0 +1,92 @@
+<%- include('../layouts/header.ejs'); -%>
+
+<h3>Add Recipe</h3>
+
+<form action="/recipes" method="post">
+  <div class="row gx-5">
+    <div class="col">
+      <img class="rounded img-fluid" src="/img/food-head.jpg" alt="" />
+    </div>
+    <div class="col">
+      <div class="border p-2">
+        <div class="mb-2">
+          <div class="fw-bolder">Name :</div>
+          <input
+            name="name"
+            type="text"
+            class="form-control"
+            placeholder="name recipe"
+          />
+        </div>
+        <div class="mb-2">
+          <div class="fw-bolder">Description :</div>
+          <textarea
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            name="description"
+            placeholder="description"
+          ></textarea>
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-6">
+            <div class="fw-bolder">Preparation Time :</div>
+            <input
+              name="preparation_time"
+              type="number"
+              class="form-control"
+              placeholder="In hours"
+            />
+          </div>
+          <div class="col-6">
+            <div class="fw-bolder">Cook Time :</div>
+            <input
+              name="cooking_time"
+              type="number"
+              class="form-control"
+              placeholder="In hours"
+            />
+          </div>
+        </div>
+        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 p-2">
+            <% categoryList.forEach(category => { %>
+              <div class="form-check col">
+                <input class="form-check-input" name="categoryId[]" type="checkbox" value="<%= category.id %>" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                  <%= category.name %>
+                </label>
+              </div>  
+            <% }) %>
+        </div>
+        <div class="mb-4" id="form-ingredient">
+          <div class="fw-bolder">Ingredient :</div>
+          <div class="row g-0 mt-1">
+            <div class="col-1 col-md-0">
+              <a id="addButton" href="#"
+                ><i class="fa-solid fa-circle-plus fa-xl"></i
+              ></a>
+            </div>
+            <div class="col-1 col-md-0">
+              <a id="deleteButton" href="#"
+                ><i
+                  class="fa-sharp fa-solid fa-circle-xmark fa-xl"
+                  style="color: #f60909"
+                ></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary mb-2"
+          href="#"
+          role="button"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<%- include('../layouts/footer.ejs'); -%>

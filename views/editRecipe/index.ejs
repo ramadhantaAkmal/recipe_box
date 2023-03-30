@@ -1,0 +1,127 @@
+<%- include('../layouts/header.ejs'); -%>
+<div class="row justify-content-center" style="width: 100rem">
+  <div class="col-6">
+    <h3>Edit Recipe</h3>
+    <form action="/recipes/update/<%= resultRC.id %>" method="post">
+      <div class="mb-2">
+        <div class="fw-bolder">Name :</div>
+        <input
+          value="<%= resultRC.name %>"
+          name="name"
+          type="text"
+          class="form-control"
+          placeholder="name recipe"
+        />
+      </div>
+      <div class="mb-2">
+        <div class="fw-bolder">Description :</div>
+        <textarea
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          rows="3"
+          name="description"
+          placeholder="description"
+        >
+<%= resultRC.description %></textarea
+        >
+      </div>
+      <div class="row g-2 mb-2">
+        <div class="col-6">
+          <div class="fw-bolder">Preparation Time :</div>
+          <input
+            value="<%= resultRC.preparation_time %>"
+            name="preparation_time"
+            type="number"
+            class="form-control"
+            placeholder="In hours"
+          />
+        </div>
+        <div class="col-6">
+          <div class="fw-bolder">Cook Time :</div>
+          <input
+            value="<%= resultRC.cooking_time %>"
+            name="cooking_time"
+            type="number"
+            class="form-control"
+            placeholder="In hours"
+          />
+        </div>
+      </div>
+      <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 p-2">
+        <% categoryList.forEach(category => { %> <%
+        if(resultRC.categories.find(temp => temp.id === category.id)){ %>
+        <div class="form-check col">
+          <input
+            class="form-check-input"
+            name="categoryId[]"
+            type="checkbox"
+            value="<%= category.id %>"
+            id="flexCheckDefault<%= category.id %>"
+            checked
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            <%= category.name %>
+          </label>
+        </div>
+        <% } else{ %>
+        <div class="form-check col">
+          <input
+            class="form-check-input"
+            name="categoryId[]"
+            type="checkbox"
+            value="<%= category.id %>"
+            id="flexCheckDefault<%= category.id %>"
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            <%= category.name %>
+          </label>
+        </div>
+        <% } %> <% }) %>
+      </div>
+      <div class="mb-4" id="form-ingredient">
+        <div class="fw-bolder">Ingredient :</div>
+        <div class="row g-0 mt-1 mb-2">
+          <div class="col-1 col-md-0">
+            <a id="addUpdateButton" href="#"
+              ><i class="fa-solid fa-circle-plus fa-xl"></i
+            ></a>
+          </div>
+          <div class="col-1 col-md-0">
+            <a id="deleteUpdateButton" href="#"
+              ><i
+                class="fa-sharp fa-solid fa-circle-xmark fa-xl"
+                style="color: #f60909"
+              ></i
+            ></a>
+          </div>
+        </div>
+        <div class="row g-3">
+          <% resultRC.ingredients.forEach((item, index) => { %>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              name="nameUpdate<%= index +1 %>"
+              placeholder="name"
+              value="<%= item.name %>"
+            />
+          </div>
+          <div class="col-md-3">
+            <input type="number" class="form-control" name="quantityUpdate<%=
+            index + 1 %>" placeholder="quantity" value="<%= item.quantity %>""
+            />
+          </div>
+          <% }) %>
+        </div>
+      </div>
+      <div class="mb-3">
+        <input
+          class="btn btn-success w-100"
+          type="submit"
+          value="Update Recipe"
+        />
+      </div>
+    </form>
+  </div>
+</div>
+<%- include('../layouts/footer.ejs'); -%>

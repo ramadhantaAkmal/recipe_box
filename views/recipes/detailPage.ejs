@@ -1,0 +1,34 @@
+<%- include('../layouts/header.ejs'); -%>
+
+<h3><%= resultRC.name %></h3>
+<div class="row gx-5">
+  <div class="col">
+    <img class="rounded img-fluid" src="/img/food-head.jpg" alt="" />
+  </div>
+  <div class="col">
+    <div class="border p-2">
+      <div class="fw-bolder">Description :</div>
+      <p class="text-description"><%= resultRC.description %></p>
+    </div>
+  </div>
+</div>
+
+<div>
+  <strong>Category</strong> : <% resultRC.categories.forEach((category, index) => { %>
+    <%= category.name %> 
+    <% if((index+1) !== resultRC.categories.length){ %>
+      ,
+    <% } %>
+  <% }) %>
+</div>
+
+<div>
+  <strong>Ingredients :</strong>
+  <ul>
+    <% resultRC.ingredients.forEach(ingredient => { %>
+    <li><%= ingredient.name %></li>
+    <% }) %>
+  </ul>
+</div>
+
+<%- include('../layouts/footer.ejs'); -%>
